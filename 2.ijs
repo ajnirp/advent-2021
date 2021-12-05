@@ -1,21 +1,23 @@
 data =: 1!:1 <'2.txt'
 lines =: > 	cutopen toJ data
 
-NB. Fetch only lines from y starting with character x
+remove_spaces =: #~ ~:&' '
+
+NB. Fetch lines from y that start with character x, and remove all spaces.
 startswith =: dyad define
 i =. =&x @ {."1 y
-lines =. i # y
+lines =. remove_spaces"1 i # y
 )
 
-NB. obtain the moves. Relies on each move being a single digit
-moves =: dyad define
-trim =. x {."1 y
-moves =. > ". each {. |. |: trim
+NB. Obtain the net result of the moves for that direction.
+NB. Relies on each move being a single digit.
+net_change =: monad define
++/ "."0 {:"1 y startswith lines
 )
 
-f =: +/ 9 moves 'f' startswith lines
-u =: +/ 4 moves 'u' startswith lines
-d =: +/ 6 moves 'd' startswith lines
+f =: net_change 'f'
+u =: net_change 'u'
+d =: net_change 'd'
 
 ans1 =: f * (d - u)
 
