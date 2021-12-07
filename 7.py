@@ -49,4 +49,7 @@ def cost_either_side_mean(nums):
 # What we have here is not squaring but triangular numbers. So we check on both
 # sides of the mean to be sure. Rounding the mean to the closest integer might
 # not work
+# a more rigorous approach might be to check all ints on both sides of the mean
+# within a certain window, and stop once we observe the values monotonically
+# increasing
 print(min(cost_either_side_mean(nums)))
